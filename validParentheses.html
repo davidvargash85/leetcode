@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const map = {
+        '(': ')',
+        '[': ']',
+        '{': '}'
+      };
+      function validParentheses(s) {
+        // use two stacks
+        // with every char on s push into stack
+        const sArr = s.split('');
+        const stack = [];
+
+        while (sArr.length > 0) {
+          const c = sArr.shift();
+          if (c === '(' || c === '[' || c === '{') {
+            stack.push(c);
+          } else {
+            // if findign a close with and empty stack a bad combo
+            if (stack.length === 0) {
+              return false;
+            }
+            const stackEl = stack.pop();
+            if (map[stackEl] !== c) {
+              return false;
+            }
+          }
+        }
+
+        return true;
+      }
+
+      const tests = [
+        {
+          s: '()',
+          result: true
+        },
+        {
+          s: '()[]{}',
+          result: true
+        },
+        {
+          s: '(]',
+          result: false
+        },
+        {
+          s: '([)]',
+          result: false
+        },
+        {
+          s: '{[]}',
+          result: true
+        }
+      ];
+      for (const e of tests) {
+        console.log(
+          `>> ${e.s} should be ${e.result}: Showing ${validParentheses(e.s)}`
+        );
+      }
+    </script>
+  </body>
+</html>

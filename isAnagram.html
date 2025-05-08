@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // o(n) n*n
+      function isAnagram1(s, t) {
+        // return false if lenghts are diff
+        if (s.length !== t.length) return false;
+        // iterate over 1st array
+        // find each el from s in t
+        // if found splice from t
+        // not found return (is not anagram)
+
+        const tArr = t.split('');
+
+        for (let i = 0; i < s.length; i++) {
+          const tInd = tArr.findIndex((e) => e === s[i]);
+          if (tInd === -1) return false;
+
+          tArr.splice(tInd, 1);
+        }
+
+        return true;
+      }
+
+      // O 2n ~ n
+      function isAnagram2(s, t) {
+        // return false if lenghts are diff
+        if (s.length !== t.length) return false;
+
+        const sCounter = {};
+        const tCounter = {};
+        for (let i = 0; i < s.length; i++) {
+          sCounter[s[i]] = 1 + (sCounter[s[i]] ?? 0);
+          tCounter[t[i]] = 1 + (tCounter[t[i]] ?? 0);
+        }
+
+        for (const k in sCounter) {
+          if (sCounter[k] !== tCounter[k]) return false;
+        }
+        return true;
+      }
+
+      function isAnagram(s, t) {
+        // return false if lenghts are diff
+        if (s.length !== t.length) return false;
+
+        const hash = new Array(26).fill(0);
+        for (let i=0;i<s.length;i++) {
+          hash[s.charCodeAt(i) - 'a'.charCodeAt(0)]++;
+          hash[t.charCodeAt(i) - 'a'.charCodeAt(0)]--;
+        }
+
+        return !hash.some(n => n !== 0);
+      }
+
+      const tests = [
+        {
+          s: 'racecar',
+          t: 'carrace'
+        },
+        {
+          s: 'jar',
+          t: 'jam'
+        }
+      ];
+
+      tests.forEach((t) => console.log('>> isAnagram', isAnagram(t.s, t.t)));
+    </script>
+  </body>
+</html>

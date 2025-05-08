@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // O(n)
+      function twoSum(nums, target) {
+        // const complements = {
+        //     4: 0,
+        //     3: 1,
+        // };
+        // solution
+
+        const complHash = {};
+        // iterate once over nums
+        for (let i = 0; i < nums.length; i++) {
+          // for each calc (targ - nums[i]), and store in hash, key: diff, value: index
+          const compl = target - nums[i];
+          // if the complement + current element = target, we have found it
+          if (complHash.hasOwnProperty(nums[i])) {
+            return [complHash[nums[i]], i];
+          } else {
+            // else hash the compl
+            complHash[compl] = i;
+          }
+        }
+        return [];
+      }
+
+      // Input: (nums = [3, 4, 5, 6]), (target = 7);
+      const tests = [{
+        nums: [3, 4, 5, 6],
+        target: 7
+      }, {
+        nums: [5,5],
+        target: 10
+      }]
+
+      tests.forEach((t) => console.log('>> twoSum', twoSum(t.nums, t.target)));
+    </script>
+  </body>
+</html>

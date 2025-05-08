@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function flattenedObject(obj, prefix = '', result = {}) {
+        // stop when value is of types [string, number]
+        // if (typeof obj === 'string' || typeof obj === 'number') {
+        //   return obj;
+        // }
+        // dig when value is type object
+        for (const key in obj) {
+          if (Object.prototype.hasOwnProperty.call(obj, key)) {
+            const element = obj[key];
+            const newPrefix = prefix ? `${prefix}.${key}` : key;
+
+            if (typeof element === 'string' || typeof element === 'number') {
+              result[newPrefix] = element;
+            } else {
+              flattenedObject(element, newPrefix, result);
+            }
+          }
+        }
+       return result;
+      }
+
+      const tests = [
+        {
+          o: {
+            a: {
+              v: 3,
+              b: {
+                c: 1
+              }
+            },
+            d: 2
+          },
+          r: {
+            'a.b.c': 1,
+            'a.v': 3,
+            d: 2
+          }
+        }
+      ];
+      const result = flattenedObject(tests[0]);
+      console.log('result', result);
+    </script>
+  </body>
+</html>

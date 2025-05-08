@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function flattenDomTree(node, result = []) {
+        // Your code here
+        result.push(node.tag);
+        for (const n of node.children || []) {
+          flattenDomTree(n, result);
+        }
+
+        return result;
+      }
+
+      function flattenDomTreeStack(node) {
+        const result = [];
+        const stack = [node];
+        while (stack.length > 0) {
+          const n = stack.pop();
+          result.push(n.tag);
+          if (Array.isArray(n.children)) {
+            for (let i = n.children.length - 1; i >= 0; i--) {
+              stack.push(n.children[i]);
+            }
+          }
+        }
+
+        return result;
+      }
+
+      const tests = [
+        {
+          input: {
+            tag: 'form',
+            children: [
+              { tag: 'input' },
+              {
+                tag: 'fieldset',
+                children: [
+                  { tag: 'legend' },
+                  {
+                    tag: 'div',
+                    children: [{ tag: 'label' }, { tag: 'input' }]
+                  }
+                ]
+              }
+            ]
+          },
+          output: [
+            'form',
+            'input',
+            'fieldset',
+            'legend',
+            'div',
+            'label',
+            'input'
+          ]
+        }
+      ];
+
+      for (const t of tests) {
+        console.log(flattenDomTree(t.input, []));
+        console.log(flattenDomTreeStack(t.input));
+      }
+    </script>
+  </body>
+</html>

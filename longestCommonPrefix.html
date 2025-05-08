@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /**
+       * @param {string[]} strs
+       * @return {string}
+       */
+      function longestCommonPrefix(strs) {
+        for (let i = 0; i < strs[0].length; i++) {
+          for (let s of strs) {
+            if (i === s.length || s[i] !== strs[0][i]) {
+              return s.slice(0, i);
+            }
+          }
+        }
+        return strs[0];
+      }
+
+      function longestCommonPrefix2(strs) {
+        // iterate over strs and update prefix
+        // prefix will grow or shrink based on how many chars match in each str
+        if (!strs[0].length) {
+          return '';
+        }
+
+        let prefix = strs[0];
+        for (const s of strs) {
+          const l = Math.min(prefix.length, s.length);
+          let i = 0;
+          for (; i < s.length; i++) {
+            if (prefix[i] !== s[i]) {
+              break;
+            }
+          }
+          prefix = strs[0].substring(0, i);
+          if (!prefix.length) {
+            return '';
+          }
+        }
+        return prefix;
+      }
+
+      const tests = [
+        ['flower', 'flow', 'flight'],
+        // ['dog', 'racecar', 'car']
+      ];
+      for (const arr of tests) {
+        console.log('>> longestCommonPrefix', longestCommonPrefix(arr));
+      }
+    </script>
+  </body>
+</html>

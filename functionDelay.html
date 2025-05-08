@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <p>
+        Problem Statement You are tasked with creating a utility function called
+        debounce in JavaScript. The debounce function should take two arguments:
+        A function f A delay time in milliseconds delay The debounce function
+        should return a new function that, when invoked, ensures that f is only
+        executed after `delay` milliseconds have passed since the last time the
+        returned function was called. If the function is called again before
+        delay milliseconds have passed, the timer should reset.
+      </p>
+    </div>
+    <script>
+      const add = (a, b) => console.log(a + b);
+
+      function debounce(f, delay) {
+        // holding onto the initial time, will re-calc with each subsequent call to f()
+        let timeStart;
+        // returning a function currying
+        return function (...args) {
+          timeStart = Date.now();
+          setTimeout(() => {
+            // exec the original with the supplied args
+            if (Date.now() - timeStart >= delay) {
+              return f(...args);
+            }
+          }, delay);
+        };
+      }
+
+      function debounce1(f, delay) {
+        // holding onto the initial time, will re-calc with each subsequent call to f()
+        let timer;
+        // returning a function currying
+        return function (...args) {
+          clearTimeout(timer);
+          timer = setTimeout(() => {
+            // exec the original with the supplied args
+            return f(...args);
+          }, delay);
+        };
+      }
+
+      const debouncedAdd = debounce1(add, 1000);
+      console.log('>> ', debouncedAdd(2, 3));
+      console.log('>> ', debouncedAdd(2, 3));
+      console.log('>> ', debouncedAdd(2, 3));
+      console.log('>> ', debouncedAdd(2, 3));
+      console.log('>> ', debouncedAdd(2, 3));
+    </script>
+  </body>
+</html>

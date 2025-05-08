@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // all anagrams have the same ammount of chars
+      // count chars via an object
+      // O(n)
+      function isAnagram(s, t) {
+        if (s.length !== t.length) {
+          return false;
+        }
+
+        const sCount = {};
+        const tCount = {};
+        for (let i = 0; i < s.length; i++) {
+          sCount[s[i]] = (sCount[s[i]] || 0) + 1;
+          tCount[t[i]] = (tCount[t[i]] || 0) + 1;
+        }
+
+        for (const key of Object.keys(sCount)) {
+          if (sCount[key] !== tCount[key]) {
+            return false;
+          }
+        }
+        return true;
+      }
+
+      const tests = [
+        {
+          s: 'racecar',
+          t: 'carrace'
+        },
+        {
+          s: 'jar',
+          t: 'jam'
+        }
+      ];
+
+      tests.forEach((t) => console.log('>> isAnagram', isAnagram(t.s, t.t)));
+
+      // function topKFrequent(nums, k) {
+      //   const result = [];
+      //   // const result = new Array(nums.length).fill(0);
+      //   const counter = {};
+
+      //   for (const n of nums) {
+      //     counter[n] = (counter[n] || 0) + 1;
+      //   }
+
+      //   const arr = Object.keys(counter).map((k) => [k, counter[k]]);
+      //   const sortedArr = arr.sort((a, b) => b[1] - a[1]);
+
+      //   for (let i = 0; i < k; i++) {
+      //     result.push(sortedArr[i][0]);
+      //   }
+
+      //   return result;
+      // }
+
+      // function topKFrequentBuckets(nums, k) {
+      //   const counter = {};
+
+      //   for (const n of nums) {
+      //     counter[n] = (counter[n] || 0) + 1;
+      //   }
+
+      //   // init buckets
+      //   const buckets = Array.from({ length: nums.length + 1 }, () => []);
+      //   for (const [key, value] of Object.entries(counter)) {
+      //     buckets[value].push(key);
+      //   }
+
+      //   const result = [];
+      //   for (let i = buckets.length - 1; i > 0; i--) {
+      //     const bucket = buckets[i];
+      //     for (const x of bucket) {
+      //       result.push(x);
+      //       if (result.length === k){
+      //         return result;
+      //       }
+      //     }
+      //   }
+      // }
+
+      // // Input: (nums = [3, 4, 5, 6]), (target = 7);
+      // const tests = [
+      //   {
+      //     nums: [1, 2, 2, 3, 3, 3, 4, 4, 4],
+      //     k: 2
+      //   }
+      // ];
+
+      // tests.forEach((t) => {
+      //   // console.log('>> topKFrequent', topKFrequent(t.nums, t.k));
+      //   console.log(
+      //     '>> topKFrequentBuckets',
+      //     t.nums,
+      //     topKFrequentBuckets(t.nums, t.k)
+      //   );
+      // });
+
+      // function debounce(fn, delay) {
+      //   let timeoutId;
+      //   return function (...args) {
+      //     if (timeoutId) {
+      //       clearTimeout(timeoutId);
+      //     }
+      //     timeoutId = setTimeout(() => {
+      //       fn(...args);
+      //     }, delay);
+      //   };
+      // }
+
+      // function throttle(fn, delay) {
+      //   let isAvailable = true;
+      //   return function (...args) {
+      //     if (isAvailable) {
+      //       fn(...args);
+      //       isAvailable = false;
+      //       setTimeout(() => {
+      //         isAvailable = true;
+      //       }, delay);
+      //     }
+      //   }
+      // }
+
+      // const log = () => console.log('Called!');
+      // const debouncedLog = debounce(log, 1000);
+      // const throttledLog = throttle(log, 1000);
+
+      // debouncedLog();
+      // debouncedLog();
+      // debouncedLog();
+      // throttledLog();
+      // throttledLog();
+      // throttledLog();
+    </script>
+  </body>
+</html>

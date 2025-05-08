@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function groupAnagrams(words) {
+        // create aux hash for buckets
+        const buckets = {};
+        // iterate over array once
+        for (const w of words) {
+          // for each word create a hash key based on the count of each char
+          const counter = new Array(26).fill(0);
+          for (let i = 0; i < w.length; i++) {
+            const pos = w.charCodeAt(i) - 'a'.charCodeAt(0);
+            counter[pos]++;
+          }
+          const key = counter.join(',');
+          // use the hash to select buckets
+          if (!buckets[key]) {
+            buckets[key] = [];
+          }
+          buckets[key].push(w);
+        }
+
+        return Object.values(buckets);
+      }
+
+      const tests = [
+        // ['act', 'pots', 'tops', 'cat', 'stop', 'hat'],
+        // ['hhhhu', 'tttti', 'tttit', 'hhhuh', 'hhuhh', 'tittt'],
+        ["bdddddddddd","bbbbbbbbbbc"]
+      ];
+
+      tests.forEach((t) => console.log('>> groupAnagrams', groupAnagrams(t)));
+    </script>
+  </body>
+</html>

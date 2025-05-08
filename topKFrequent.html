@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+        // O(n)
+        function topKFrequent(nums, k) {
+          // use bucket sorting
+
+          // create buckets of numbers where:
+          // the position is the number-of-repeats
+          // the value is a list of numbers
+          // e.g: 1 -> [2,3,5]
+
+          // create a hash with n -> count
+          const countHash = new Map();
+          for (const n of nums) {
+              countHash.set(n, 1 + (countHash.get(n) || 0));
+          }
+          const buckets = Array.from({ length: nums.length + 1 }, () => []);
+          // foreach key-value of hash build the buckets
+          for (const item of [...countHash]) {
+              const [k, v] = item;
+              buckets[v].push(k)
+          }
+
+          // return the last k positions of the buckets array
+          const result = [];
+          for (let i = (buckets.length - 1); i >= 0; i--) {
+              for (const n of buckets[i]) {
+                  result.push(n);
+                  if (result.length === k) {
+                      return result;
+                  }
+              }
+          }
+          return result;
+      }
+
+        // Input: (nums = [3, 4, 5, 6]), (target = 7);
+        const tests = [{
+          nums: [1,2,2,3,3,3], k: 2
+        }]
+
+        tests.forEach((t) => console.log('>> topKFrequent', topKFrequent(t.nums, t.k)));
+    </script>
+  </body>
+</html>

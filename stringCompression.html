@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function compressString(s) {
+        let count = 0;
+        let curC = s[0];
+        let result = '';
+
+        for (let index = 0; index < s.length; index++) {
+          const c = s[index];
+          if (c === curC) {
+            count++;
+          }
+          if (c !== curC) {
+            result = result.concat(`${curC}${count}`);
+            count = 1;
+            curC = c;
+          }
+        }
+        result = result.concat(count + curC);
+        return result.length < s.length ? result : s;
+      }
+
+      const tests = [
+        { Input: 'aabcccccaaa', Output: 'a2b1c5a3' },
+        { Input: 'abc', Output: 'abc' }, // no compression benefit
+        { Input: 'abbbbbbc', Output: 'a1b6c1' } // no compression benefit
+      ];
+
+      for (const t of tests) {
+        console.log(
+          `compressString(${t.Input}): expected: ${
+            t.Output
+          }: actual: ${compressString(t.Input)}`
+        );
+      }
+    </script>
+  </body>
+</html>

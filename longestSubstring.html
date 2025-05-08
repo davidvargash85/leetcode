@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function longestSubstringNoRepeat(s) {
+        // use sliding window
+        // with object counter
+        // bigO(n2)
+
+        let max = 0;
+        let left = 0;
+        let rigth = 0;
+        const seen = new Set();
+
+        for (let i = 0; i < s.length; i++) {
+          let localMax = 0;
+          while (seen.has(s[rigth])) {
+            seen.delete(s[left++]);
+          }
+
+          seen.add(s[rigth++]);
+          max = Math.max(seen.size, max);
+        }
+        return max;
+      }
+
+      function longestSubstringNoRepeat__N2(s) {
+        // use sliding window
+        // with object counter
+        // bigO(n2)
+
+        let max = 0;
+        for (let i = 0; i < s.length; i++) {
+          let localMax = 0;
+          const counter = {};
+          for (let j = i; j < s.length; j++) {
+            if (counter[s[j]]) {
+              break;
+            }
+            counter[s[j]] = true;
+            localMax++;
+          }
+          if (localMax > max) {
+            max = localMax;
+          }
+        }
+
+        return max;
+      }
+
+      const tests = [
+        { Input: 'abcabcbb', Output: 3 },
+        { Input: 'bbbbb', Output: 1 },
+        { Input: 'pwwkew', Output: 3 }
+      ];
+
+      for (const t of tests) {
+        console.log(
+          `longestSubstringNoRepeat(${t.Input}) is ${
+            t.Output
+          }: Got -> ${longestSubstringNoRepeat(t.Input)}`
+        );
+      }
+    </script>
+  </body>
+</html>

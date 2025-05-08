@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const add = (a, b) => {
+        return a + b;
+      };
+
+      function throttle(f, delay) {
+        // clossure on available
+        let available = true;
+        // else if is not locked execute
+        return function (...args) {
+          if (available) {
+            available = false;
+            setTimeout(() => available = true, delay);
+            return f(...args);
+          }
+        };
+      }
+
+      const throttledAdd = throttle(add, 5000);
+      setInterval((a, b) => console.log(`>> calling throttledAdd: ${throttledAdd(a, b)}`), 1000, 2, 2);
+    </script>
+  </body>
+</html>
