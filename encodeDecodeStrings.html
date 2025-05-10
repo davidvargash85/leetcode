@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      class Solution {
+        separator = "#";
+        /**
+         * @param {string[]} strs
+         * @returns {string}
+         */
+        encode(strs) {
+          if (!strs.length) return "";
+          return strs.map((s) => `${s.length}${this.separator}${s}`).join("");
+        }
+
+        // '3#wor' + '2#bl' + '0#' + '1##'
+
+        /**
+         * @param {string} str
+         * @returns {string[]}
+         */
+        decode(str) {
+          const result = [];
+          let i = 0;
+          while (i < str.length) {
+            let j = i;
+            while (str[j] != "#" && j < str.length) {
+              j++;
+            }
+            const l = parseInt(str.slice(i, j));
+            const w = str.slice(j + 1, j + 1 + l);
+            result.push(w);
+            i = j + 1 + l;
+          }
+
+          return result;
+        }
+      }
+
+      const tests = [["neet", "code", "love", "you"]];
+      const s = new Solution();
+      for (const t of tests) {
+        const str = s.encode(t);
+        console.log(">> str", str);
+        const decoded = s.decode(str);
+        console.log(">> array", decoded);
+      }
+    </script>
+  </body>
+</html>

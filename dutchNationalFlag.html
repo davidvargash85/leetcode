@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function sortColors(nums) {
+        let bottom = 0;
+        let top = nums.length - 1;
+        let mid = 0;
+
+        while (mid <= top) {
+          switch (nums[mid]) {
+            case 0:
+              [nums[bottom], nums[mid]] = [nums[mid], nums[bottom]];
+              bottom++;
+              mid++;
+              break;
+            case 1:
+              mid++;
+              break;
+            case 2:
+              [nums[mid], nums[top]] = [nums[top], nums[mid]];
+              top--;
+              // Don't increment mid here!
+              break;
+          }
+        }
+      }
+      const arr = [1, 0, 1, 2];
+      sortColors(arr);
+      console.log(">> sortCOlors [1,0,1,2]", arr);
+    </script>
+  </body>
+</html>
