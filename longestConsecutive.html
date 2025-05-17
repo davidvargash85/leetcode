@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      class Solution {
+        /**
+         * @param {number[]} nums
+         * @return {number}
+         */
+        // O[n*logN]
+        longestConsecutive1(nums) {
+          if (nums.length === 0) return 0;
+
+          const sorted = Array.from(new Set(nums)).sort((a, b) => a - b);
+          let current = 1;
+          let max = 1;
+
+          for (let i = 1; i < nums.length; i++) {
+            if (sorted[i - 1] + 1 === sorted[i]) {
+              current++;
+            } else {
+              if (current > max) {
+                max = current;
+              }
+              current = 1;
+            }
+          }
+          return Math.max(current, max);
+        }
+
+        longestConsecutive(nums) {
+          if (nums.length === 0) {
+            return 0;
+          }
+          const mySet = new Set(nums);
+          let max = 1;
+          for (const n of nums) {
+            if (!mySet.has(n - 1)) {
+              let streak = 1;
+              while (streak < nums.length) {
+                if (mySet.has(n + streak)) {
+                  streak++;
+                } else {
+                  max = Math.max(streak, max);
+                  break;
+                }
+              }
+            }
+          }
+          return max;
+        }
+      }
+
+      const s = new Solution();
+
+      const tests = [[0, 3, 2, 5, 4, 6, 1, 1]];
+      for (const t of tests) {
+        console.log(">> longest-seq: ", s.longestConsecutive(t));
+      }
+    </script>
+  </body>
+</html>

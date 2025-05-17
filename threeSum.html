@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      class Solution {
+        /**
+         * @param {number[]} nums
+         * @return {number[][]}
+         */
+        threeSum(nums) {
+          const result = [];
+          const hash = {};
+          const usedIndex = new Set();
+          // foreach n in nums
+          for (let i = 0; i < nums.length; i++) {
+            const t = -1 * nums[i];
+            // find 0 = x + y + z
+            // -(x) = y + z
+            // -(-1) = 2 + (-1)
+            for (let j = 0; j < nums.length; j++) {
+              // foreach n check hash for t - n
+              if (i === j || usedIndex.has(j)) continue;
+              const comp = t - nums[j];
+              // if exist found triplet
+              // -- add triplet indexes to used hash
+              if (comp in hash) {
+                result.push([nums[i], com, nums[j]]);
+                usedIndex.add(i);
+                usedIndex.add(hash[comp]);
+                usedIndex.add(j);
+              } else {
+                // if not hash it
+                // hash { [n]: j }
+                hash[nums[j]] = j;
+              }
+            }
+          }
+
+          return result;
+        }
+      }
+
+      const s = new Solution();
+      const tests = [[-1, 0, 1, 2, -1, -4]];
+      for (const t of tests) {
+        console.log(">> threeSum", s.threeSum(t));
+      }
+    </script>
+  </body>
+</html>
