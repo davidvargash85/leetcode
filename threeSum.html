@@ -12,13 +12,14 @@
          * @param {number[]} nums
          * @return {number[][]}
          */
-        threeSum(nums) {
+        // fails on mult scenarios
+        __threeSum(nums) {
           const result = [];
-          const hash = {};
           const usedIndex = new Set();
           // foreach n in nums
           for (let i = 0; i < nums.length; i++) {
             const t = -1 * nums[i];
+            const hash = {};
             // find 0 = x + y + z
             // -(x) = y + z
             // -(-1) = 2 + (-1)
@@ -28,8 +29,8 @@
               const comp = t - nums[j];
               // if exist found triplet
               // -- add triplet indexes to used hash
-              if (comp in hash) {
-                result.push([nums[i], com, nums[j]]);
+              if (comp in hash && !usedIndex.has(hash[comp])) {
+                result.push([nums[i], comp, nums[j]]);
                 usedIndex.add(i);
                 usedIndex.add(hash[comp]);
                 usedIndex.add(j);
@@ -43,12 +44,48 @@
 
           return result;
         }
+
+        threeSum(nums) {
+          const result = [];
+          nums.sort((a, b) => a - b);
+          // [-4, -1, -1, 0, 1, 2]
+
+          for (let i = 0; i < nums.length; i++) {
+            if (i > 0 && nums[i] === nums[i - 1]) continue;
+
+            const t = -1 * nums[i];
+            let l = i + 1;
+            let r = nums.length - 1;
+            while (l < r) {
+              const sum = nums[l] + nums[r];
+              if (sum === t) {
+                result.push([nums[i], nums[l++], nums[r--]]);
+                while (nums[l] === nums[l - 1]) {
+                  l++;
+                }
+                while (nums[r] === nums[r + 1]) {
+                  r--;
+                }
+              } else if (sum < t) {
+                l++;
+              } else if (sum > t) {
+                r--;
+              }
+            }
+          }
+
+          return result;
+        }
       }
 
       const s = new Solution();
-      const tests = [[-1, 0, 1, 2, -1, -4]];
+      const tests = [
+        [1,-1,-1,0],
+        [-1, 0, 1, 2, -1, -4],
+        [0, 0, 0, 0],
+      ];
       for (const t of tests) {
-        console.log(">> threeSum", s.threeSum(t));
+        console.log(">> threeSum", t, s.threeSum(t));
       }
     </script>
   </body>
