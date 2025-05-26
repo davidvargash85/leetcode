@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      class Solution {
+        /**
+         * @param {number[]} height
+         * @return {number}
+         */
+        trapMe(height) {
+          let result = 0;
+
+          const maxLeft = [];
+          const maxRight = [];
+
+          let max = 0;
+          for (let i = 0; i < height.length; i++) {
+            maxLeft[i] = max;
+            max = Math.max(max, height[i]);
+          }
+
+          max = 0;
+          for (let i = height.length - 1; i >= 0; i--) {
+            maxRight[i] = max;
+            max = Math.max(max, height[i]);
+          }
+
+          for (let i = 0; i < height.length; i++) {
+            const water = Math.min(maxLeft[i], maxRight[i]) - height[i];
+            result += water > 0 ? water : 0;
+          }
+          return result;
+        }
+
+        trap(height) {
+          let result = 0;
+
+          let l = 0;
+          let r = height.length - 1;
+          let maxL = height[0];
+          let maxR = height[r];
+
+          while (l < r) {
+            if (maxL <= maxR) {
+              l++;
+              maxL = Math.max(maxL, height[l]);
+              result += maxL - height[l];
+            } else {
+              r--;
+              maxR = Math.max(maxR, height[r]);
+              result += maxR - height[r];
+            }
+          }
+
+          return result;
+        }
+      }
+
+      const s = new Solution();
+      const tests = [
+        [0, 2, 0, 3, 1, 0, 1, 3, 2, 1],
+        [4, 0, 0, 10, 0, 0, 1],
+      ];
+
+      for (const t of tests) {
+        console.log(">> Rainwater: ", s.trap(t));
+      }
+    </script>
+  </body>
+</html>
